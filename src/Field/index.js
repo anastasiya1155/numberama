@@ -3,7 +3,7 @@ import { calculatePossibleMoves } from "../utils/movesUtils";
 import { clone, getRandomElem, getRange } from "../utils/indexUtils";
 import { addNewNumbers, getRandomField, removeEmptyRows } from "../utils/stateUtils";
 
-const initialState = [
+const initialState = JSON.parse(localStorage.getItem("field") || '0') || [
   [[1, false],[2, false],[3, false],[4, false],[5, false],[6, false],[7, false],[8, false],[9, false]],
   [[1, false],[1, false],[1, false],[2, false],[1, false],[3, false],[1, false],[4, false],[1, false]],
   [[5, false],[1, false],[6, false],[1, false],[7, false],[1, false],[8, false],[1, false],[9, false]]
@@ -18,7 +18,7 @@ function Field() {
   const [selectedCell, setSelectedCell] = useState(null);
   const [possibleMoves, setPossibleMoves] = useState(initialPossibleMoves);
   const [currentHint, setCurrentHint] = useState(null);
-  const [totalMoves, setTotalMoves] = useState(0);
+  const [totalMoves, setTotalMoves] = useState(JSON.parse(localStorage.getItem("totalMoves") || '0'));
   const [gameOver, setGameOver] = useState(false);
   const [win, setWin] = useState(false);
 
@@ -38,21 +38,26 @@ function Field() {
         newState[selectedCell[1]][selectedCell[2]][1] = true;
         newState = removeEmptyRows(newState);
         setPossibleMoves(calculatePossibleMoves(newState));
+        localStorage.setItem("field", JSON.stringify(newState));
         return newState;
       });
-      setTotalMoves(prev => prev + 1)
+      setTotalMoves(prev => {
+        localStorage.setItem('totalMoves', prev + 1)
+        return prev + 1
+      })
       setCurrentHint(null);
       setSelectedCell(null);
     }
   }, [selectedCell, field, possibleMoves]);
 
   useEffect(() => {
-    if (!possibleMoves.length) {
+    if (!possibleMoves.length && !gameOver && !win) {
       setField(prev => {
-        const newState = addNewNumbers(prev);
-        if (!newState.length) {
+        if (!prev.length) {
           setWin(true);
+          return prev;
         }
+        const newState = addNewNumbers(prev);
         setPossibleMoves(() => {
           const newMoves = calculatePossibleMoves(newState);
           if (!newMoves.length) {
@@ -60,10 +65,11 @@ function Field() {
           }
           return newMoves;
         });
+        localStorage.setItem("field", JSON.stringify(newState));
         return newState
       })
     }
-  }, [possibleMoves]);
+  }, [possibleMoves, gameOver, win]);
 
   const handleUndo = useCallback(() => {
     if (prevField) {
@@ -120,7 +126,7 @@ function Field() {
       </div>
       <p className="text-slate-50 text-xs my-2">Possible moves: {possibleMoves.length / 2}</p>
       <p className="text-slate-50 text-xs my-2">Total moves: {totalMoves}</p>
-      <div className="bg-slate-100 border-2 border-slate-600 relative min-h-[124px]">
+      <div className="bg-slate-100 border-2 border-slate-600 relative min-h-[124px] max-h-[75vh] overflow-auto">
         {field.map((r, ri) => (
           <div key={ri} className="flex">
             {r.map((n, ni) => (

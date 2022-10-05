@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/numberama/static/css/main.c0491d2e.css",
+    "main.js": "/numberama/static/js/main.db9acf0e.js",
+    "static/js/787.473d9e1e.chunk.js": "/numberama/static/js/787.473d9e1e.chunk.js",
+    "index.html": "/numberama/index.html",
+    "main.c0491d2e.css.map": "/numberama/static/css/main.c0491d2e.css.map",
+    "main.db9acf0e.js.map": "/numberama/static/js/main.db9acf0e.js.map",
+    "787.473d9e1e.chunk.js.map": "/numberama/static/js/787.473d9e1e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c0491d2e.css",
+    "static/js/main.db9acf0e.js"
+  ]
+}

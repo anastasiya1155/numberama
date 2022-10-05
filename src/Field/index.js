@@ -26,7 +26,7 @@ function Field() {
     if (field[ri][ci][1]) {
       return;
     }
-    if (selectedCell && selectedCell[1] === ri && selectedCell[2] === ci) {
+    if (selectedCell?.[1] === ri && selectedCell?.[2] === ci) {
       setSelectedCell(null);
     } else if (!selectedCell || !possibleMoves.find(([c1, c2]) => JSON.stringify(c1) === JSON.stringify([ri, ci]) && JSON.stringify(c2) === JSON.stringify([selectedCell[1], selectedCell[2]]))) {
       setSelectedCell([field[ri][ci], ri, ci]);

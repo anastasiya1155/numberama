@@ -1,4 +1,4 @@
-import { clone } from "./indexUtils";
+import { clone, getRandomElem, getRange } from "./indexUtils";
 
 export const addNewNumbers = state => {
   const newState = clone(state);
@@ -47,3 +47,17 @@ export const removeEmptyRows = state => {
   });
   return newState;
 };
+
+export const getRandomField = () => {
+  const state = [];
+  for (let i = 0; i < 3; i++) {
+    const newRow = [];
+    for (let j = 0; j < 9; j++) {
+      newRow.push([getRandomElem(getRange(9).map(l => l + 1)), false])
+    }
+    console.log('newRow', newRow)
+    state.push(newRow);
+  }
+  console.log('state', state)
+  return state;
+}

@@ -19,6 +19,8 @@ function Field() {
   const [possibleMoves, setPossibleMoves] = useState(initialPossibleMoves);
   const [currentHint, setCurrentHint] = useState(null);
   const [totalMoves, setTotalMoves] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [win, setWin] = useState(false);
 
   const handleClick = useCallback((ri, ci) => {
     if (field[ri][ci][1]) {
@@ -48,7 +50,16 @@ function Field() {
     if (!possibleMoves.length) {
       setField(prev => {
         const newState = addNewNumbers(prev);
-        setPossibleMoves(() => calculatePossibleMoves(newState));
+        if (!newState.length) {
+          setWin(true);
+        }
+        setPossibleMoves(() => {
+          const newMoves = calculatePossibleMoves(newState);
+          if (!newMoves.length) {
+            setGameOver(true);
+          }
+          return newMoves;
+        });
         return newState
       })
     }
@@ -83,23 +94,33 @@ function Field() {
     });
   } , []);
 
-  const handleRestart = useCallback(() => {
-    const newField = getRandomField();
+  const handleRestart = useCallback((e, isClassic) => {
+    const newField = isClassic ? clone(initialState) : getRandomField();
     setField(newField);
     setPossibleMoves(calculatePossibleMoves(newField));
+    setWin(false);
+    setGameOver(false);
   }, []);
 
   return (
     <div>
-      <div className="flex items-center gap-4 text-slate-50 justify-center">
-        <button onClick={handleUndo}>Undo</button>
-        <button onClick={handleHint}>Hint</button>
-        <button onClick={handleAddNums}>Add numbers</button>
-        <button onClick={handleRestart}>Restart</button>
+      <div className="flex items-center text-slate-50 justify-between">
+        <button onClick={handleUndo} className="border border-slate-900 px-4 rounded bg-slate-800">
+          Undo
+        </button>
+        <button onClick={handleHint} className="border border-slate-900 px-4 rounded bg-slate-800">
+          Hint
+        </button>
+        <button onClick={handleAddNums} className="border border-slate-900 px-4 rounded bg-slate-800">
+          Add numbers
+        </button>
+        <button onClick={handleRestart} className="border border-slate-900 px-4 rounded bg-slate-800">
+          Restart
+        </button>
       </div>
       <p className="text-slate-50 text-xs my-2">Possible moves: {possibleMoves.length / 2}</p>
       <p className="text-slate-50 text-xs my-2">Total moves: {totalMoves}</p>
-      <div className="bg-slate-100 border-2 border-slate-600">
+      <div className="bg-slate-100 border-2 border-slate-600 relative min-h-[124px]">
         {field.map((r, ri) => (
           <div key={ri} className="flex">
             {r.map((n, ni) => (
@@ -119,6 +140,23 @@ function Field() {
             ))}
           </div>
         ))}
+        {(win || gameOver) && (
+          <div className="absolute top-0 bottom-0 left-0 right-0 backdrop-blur-sm bg-opacity-40 bg-slate-100 flex flex-col items-center justify-start gap-3">
+            <p className="text-xl mt-2">{win ? "You won! Congrats!" : "Game over, looser..."}</p>
+            <button
+              onClick={handleRestart}
+              className="border border-slate-900 px-4 rounded bg-slate-300"
+            >
+              Start with random numbers
+            </button>
+            <button
+              onClick={(e) => handleRestart(e, true)}
+              className="border border-slate-900 px-4 rounded bg-slate-300"
+            >
+              Start classic game
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

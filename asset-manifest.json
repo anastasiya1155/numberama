@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/numberama/static/css/main.f8941f4c.css",
-    "main.js": "/numberama/static/js/main.a639fe99.js",
+    "main.js": "/numberama/static/js/main.4c7f20e4.js",
     "static/js/787.473d9e1e.chunk.js": "/numberama/static/js/787.473d9e1e.chunk.js",
     "index.html": "/numberama/index.html",
     "main.f8941f4c.css.map": "/numberama/static/css/main.f8941f4c.css.map",
-    "main.a639fe99.js.map": "/numberama/static/js/main.a639fe99.js.map",
+    "main.4c7f20e4.js.map": "/numberama/static/js/main.4c7f20e4.js.map",
     "787.473d9e1e.chunk.js.map": "/numberama/static/js/787.473d9e1e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f8941f4c.css",
-    "static/js/main.a639fe99.js"
+    "static/js/main.4c7f20e4.js"
   ]
 }

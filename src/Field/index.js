@@ -57,14 +57,20 @@ function Field() {
           setWin(true);
           return prev;
         }
-        const newState = addNewNumbers(prev);
-        setPossibleMoves(() => {
-          const newMoves = calculatePossibleMoves(newState);
-          if (!newMoves.length) {
-            setGameOver(true);
-          }
-          return newMoves;
-        });
+        let newState = addNewNumbers(prev);
+        let newMoves = calculatePossibleMoves(newState);
+        if (!newMoves.length) {
+          newState = addNewNumbers(newState);
+          newMoves = calculatePossibleMoves(newState);
+        }
+        if (!newMoves.length) {
+          newState = addNewNumbers(newState);
+          newMoves = calculatePossibleMoves(newState);
+        }
+        if (!newMoves.length) {
+          setGameOver(true);
+        }
+        setPossibleMoves(() => newMoves);
         localStorage.setItem("field", JSON.stringify(newState));
         return newState
       })

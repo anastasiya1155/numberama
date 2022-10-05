@@ -53,7 +53,7 @@ function Field() {
   useEffect(() => {
     if (!possibleMoves.length && !gameOver && !win) {
       setField(prev => {
-        if (!prev.length) {
+        if (prev.every(r => r.every(c => c[1])) || !prev.length) {
           setWin(true);
           return prev;
         }

@@ -112,6 +112,7 @@ function Field() {
     setPossibleMoves(calculatePossibleMoves(newField));
     setWin(false);
     setGameOver(false);
+    setTotalMoves(0);
   }, []);
 
   return (

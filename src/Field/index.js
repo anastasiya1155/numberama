@@ -117,23 +117,25 @@ function Field() {
 
   return (
     <div>
-      <div className="flex items-center text-slate-50 justify-between">
-        <button onClick={handleUndo} className="border border-slate-900 px-4 rounded bg-slate-800">
-          Undo
-        </button>
-        <button onClick={handleHint} className="border border-slate-900 px-4 rounded bg-slate-800">
-          Hint
-        </button>
-        <button onClick={handleAddNums} className="border border-slate-900 px-4 rounded bg-slate-800">
-          Add numbers
-        </button>
-        <button onClick={handleRestart} className="border border-slate-900 px-4 rounded bg-slate-800">
-          Restart
-        </button>
+      <div className=" sticky top-0 z-10 bg-slate-900 pt-10 pb-2">
+        <div className="flex items-center text-slate-50 justify-between">
+          <button onClick={handleUndo} className="border border-slate-900 px-4 rounded bg-slate-800">
+            Undo
+          </button>
+          <button onClick={handleHint} className="border border-slate-900 px-4 rounded bg-slate-800">
+            Hint
+          </button>
+          <button onClick={handleAddNums} className="border border-slate-900 px-4 rounded bg-slate-800">
+            Add numbers
+          </button>
+          <button onClick={handleRestart} className="border border-slate-900 px-4 rounded bg-slate-800">
+            Restart
+          </button>
+        </div>
+        <p className="text-slate-50 text-xs my-2">Possible moves: {possibleMoves.length / 2}</p>
+        <p className="text-slate-50 text-xs mt-2">Total moves: {totalMoves}</p>
       </div>
-      <p className="text-slate-50 text-xs my-2">Possible moves: {possibleMoves.length / 2}</p>
-      <p className="text-slate-50 text-xs my-2">Total moves: {totalMoves}</p>
-      <div className="bg-slate-100 border-2 border-slate-600 relative min-h-[124px] max-h-[75vh] overflow-auto">
+      <div className="bg-slate-100 border-2 border-slate-600 relative min-h-[124px]">
         {field.map((r, ri) => (
           <div key={ri} className="flex">
             {r.map((n, ni) => (

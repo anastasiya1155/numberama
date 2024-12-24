@@ -2,7 +2,7 @@ import Field from "./Field";
 
 function App() {
   return (
-    <div className="w-screen min-h-screen bg-slate-900 flex justify-start items-center py-10 flex-col">
+    <div className="w-screen min-h-screen bg-slate-900 flex justify-start items-center pb-10 flex-col">
       <Field/>
       <p className="text-gray-400 mt-10 w-[364px]">
         Numberama aka numbers game or numberzilla is a casual and very addictive game with very easy rules.
